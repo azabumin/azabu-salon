@@ -6,6 +6,22 @@
 日本語版の別ブランド「AZABU SALON」として作った Next.js(App Router) + TypeScript + Tailwind v4 プロジェクト。
 白ベース + ブラウンポイント(ユーザー指定)。
 
+## 公開URL・デプロイ
+
+- **GitHub repo:** https://github.com/azabumin/azabu-salon (public)
+- **Live demo (GitHub Pages):** https://azabumin.github.io/azabu-salon/
+- デプロイ: `npm run deploy`(`next build && gh-pages -d out --nojekyll`)。変更後は必ずこれを
+  再実行しないとライブ版が古いまま。
+- `next.config.ts` は `output: "export"` + `basePath: "/azabu-salon"` + `trailingSlash: true` の
+  静的エクスポート構成(サーバー機能は一切使っていないので export と相性が良い)。
+- **ハマった点:** 初回デプロイ時、`_next/static/chunks/*` が軒並み404になった。原因は GitHub Pages が
+  デフォルトで Jekyll 処理を通し、アンダースコアで始まる `_next/` ディレクトリを静的サイトから除外して
+  しまうため。`public/.nojekyll` を置くだけでは `gh-pages` パッケージ側がデフォルトでドットファイルを
+  除外してしまい効果がなかった — 確実なのは `gh-pages -d out --nojekyll` の **`--nojekyll` フラグ**
+  (deploy スクリプトに入れ済み)。似た静的サイトを GitHub Pages に出すときはこれを最初から入れておくこと。
+- basePath 付きなので、ローカル `npm run dev` は `http://localhost:3400/azabu-salon` 配下で動く
+  (ルートの `http://localhost:3400/` ではない)。
+
 ## 実行
 
 ```bash
